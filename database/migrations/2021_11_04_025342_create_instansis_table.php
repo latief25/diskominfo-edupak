@@ -13,13 +13,15 @@ class CreateInstansisTable extends Migration
      */
     public function up()
     {
-        Schema::create('instansis', function (Blueprint $table) {
+        Schema::create('instansi', function (Blueprint $table) {
             $table->id();
             $table->string('kwil', 10)->unique();
             $table->string("kinsduk", 4)->unique();
             $table->string('nwil', 50);
             $table->string('ibu_kota', 50)->nullable();
             $table->unsignedTinyInteger('twil');
+            $table->unsignedTinyInteger('kd_lokker');
+            $table->string("bkd", 100)->nullable();
             $table->timestamps();
         });
     }
