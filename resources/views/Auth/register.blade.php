@@ -3,8 +3,8 @@
 @section('content')
     <div class="d-flex flex-column min-vh-100 justify-content-center overflow-hidden">
         <div class="row justify-content-center align-items-center mt-4">
-            <div class="col-md-4 p-4">
-                <main class="form-signin">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-4">
+                <main>
                     <form class="justify-content-center" method="POST" action="/register">
                         @csrf
                         <img class="mb-3 mx-auto d-block" src={{ asset('images/logo.png') }} width="60">

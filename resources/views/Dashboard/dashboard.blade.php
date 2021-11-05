@@ -5,11 +5,11 @@
 @section('content')
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/dashboard">E-Dupak</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        <button class="navbar-toggler  d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/dashboard">E-Dupak</a>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
                 <form action="/logout" method="POST">
@@ -48,15 +48,16 @@
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Data Profile</h1>
                 </div>
-                <button class="btn btn-primary d-flex align-items-center">
-                    <span>Edit</span>
+                <button class="btn btn-primary d-flex align-items-center" onclick="edit()">
+                    Edit
                     <span class="ms-2" style="width: 20px; height: 20px;" data-feather="edit-2">
                     </span>
                 </button>
+
                 <div class="mt-4">
-                    <form method="POST" action="" class="justify-content-center">
+                    <form method="POST" action="/profile" class="justify-content-center">
                         @csrf
-                        <fieldset disabled>
+                        <fieldset id="edit" disabled>
                             <div class="mb-3 form-floating">
                                 <input type="text" class="form-control @error('nip')is-invalid @enderror" id="nip"
                                     name="nip" value="{{ $data->nip }}" placeholder="nip">
@@ -69,7 +70,7 @@
                             </div>
                             <div class="mb-4 form-floating">
                                 <input type="text" class="form-control @error('nama')is-invalid @enderror" id="nama"
-                                    name="nama" placeholder="nama" value="{{ $data->nama }}">
+                                    name="nama" value="{{ $data->nama }}">
                                 <label for="nama">Nama</label>
                                 @error('nama')
                                     <div class="invalid-feedback">
@@ -78,30 +79,30 @@
                                 @enderror
                             </div>
                             <div class="mb-4 form-floating">
-                                <input type="text" class="form-control @error('nkarpeg')is-invalid @enderror" id="nkarpeg"
-                                    name="nkarpeg" placeholder="nkarpeg" value="{{ $data->nkarpeg ?? ' ' }}">
-                                <label for="nkarpeg">Nomor Seri KARPEG</label>
-                                @error('nkarpeg')
+                                <input type="text" class="form-control @error('nomor_seri_karpeg')is-invalid @enderror"
+                                    id="nomor_seri_karpeg" name="nomor_seri_karpeg" value="{{ $data->nkarpeg }}">
+                                <label for="nomor_seri_karpeg">Nomor Seri KARPEG</label>
+                                @error('nomor_seri_karpeg')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="mb-4 form-floating">
-                                <input type="text" class="form-control @error('tmpLahir')is-invalid @enderror" id="tmpLahir"
-                                    name="tmpLahir" placeholder="tmpLahir" value="{{ $data->tempat_lahir ?? ' ' }}">
-                                <label for="tmpLahir">Tempat Lahir</label>
-                                @error('tmpLahir')
+                                <input type="text" class="form-control @error('tempat_lahir')is-invalid @enderror"
+                                    id="tempat_lahir" name="tempat_lahir" value="{{ $data->tempat_lahir }}">
+                                <label for="tempat_lahir">Tempat Lahir</label>
+                                @error('tempat_lahir')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="mb-4 form-floating">
-                                <input type="date" class="form-control @error('tglLahir')is-invalid @enderror" id="tglLahir"
-                                    name="tglLahir" value="{{ $data->tanggal_lahir ?? ' ' }}">
-                                <label for="tglLahir">Tanggal Lahir</label>
-                                @error('tglLahir')
+                                <input type="date" class="form-control @error('tanggal_lahir')is-invalid @enderror"
+                                    id="tanggal_lahir" name="tanggal_lahir" value="{{ $data->tanggal_lahir }}">
+                                <label for="tanggal_lahir">Tanggal Lahir</label>
+                                @error('tanggal_lahir')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -114,18 +115,23 @@
                                     <option value="P">Perempuan</option>
                                 </select>
                                 <label for="jenis-kelamin">Jenis Kelamin</label>
-                                @error('jk')
+                                @error('jenis_kelamin')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="mb-4 form-floating">
-                                <input type="text" class="form-control @error('pendidikan')is-invalid @enderror"
-                                    id="pendidikan" name="pendidikan" placeholder="pendidikan"
-                                    value="{{ $data->pendidikan ?? ' ' }}">
-                                <label for="pendidikan">Pendidikan Tertinggi</label>
-                                @error('pendidikan')
+                                <select name="pendidikan_tertinggi" class="form-select"
+                                    aria-label="Pendidikan Tertinggi">
+                                    <option selected>Pilih pendidikan tertinggi</option>
+                                    <option value="sma">SMA/K</option>
+                                    <option value="s1">S1</option>
+                                    <option value="s2">S2</option>
+                                    <option value="s3">S3</option>
+                                </select>
+                                <label for="pendidikan_tertinggi">Pendidikan Tertinggi</label>
+                                @error('jenis_kelamin')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -202,8 +208,19 @@
 
 
 @section('js')
-    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
+
+
+        function edit() {
+            let form = document.getElementById("edit");
+            console.log(form)
+            form.removeAttribute("disabled")
+        }
+
+        function save() {
+            form.setAttribute("disabled");
+        }
     </script>
 @endsection
