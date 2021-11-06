@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -17,8 +18,16 @@ class ProfileController extends Controller
             "tanggal_lahir" => "required|date|before:today",
             "jenis_kelamin" => "required|in:L,P",
             "pendidikan_tertinggi" => "required",
-
         ]);
-        dd($request);
+        $user = User::where('nip', $validateData['nip'])->first();
+        $user->nama = $validateData['nama'];
+        $user->nip = $validateData['nip'];
+        $user->tempat_lahir = $validateData['tempat_lahir'];
+        $user->tanggal_lahir = $validateData['tanggal_lahir'];
+        $user->jenis_kelamin = $validateData['jenis_kelamin'];
+        $user->pendidikan = $validateData['pendidikan_tertinggi'];
+        $user->nkarpeg = $validateData['nomor_seri_karpeg'];
+        $user->save();
+        return redirect('/dashboard');
     }
 }

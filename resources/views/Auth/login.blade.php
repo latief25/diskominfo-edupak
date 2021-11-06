@@ -1,47 +1,70 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
 @section('content')
-    <div class="d-flex flex-column min-vh-100 justify-content-center overflow-hidden">
-        <div class="row justify-content-center align-items-center mt-4">
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-4">
-                <main>
-                    <form method="POST" action="/login" class="justify-content-center">
-                        @csrf
-                        <img class="mb-3 mx-auto d-block" src={{ asset('images/logo.png') }} width="60">
-                        <h1 class="h3 mb-3 fw-normal text-center fw-bold">E-DUPAK</h1>
 
-                        <div class="mb-3 form-floating">
-                            <input type="text" class="form-control @error('nip')is-invalid @enderror" id="nip" name="nip"
-                                value="{{ old('nip') }}" placeholder="nip">
-                            <label for="nip">NIP</label>
-                            @error('nip')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="mb-4 form-floating">
-                            <input type="password" class="form-control @error('password')is-invalid @enderror" id="password"
-                                name="password" placeholder="Password">
-                            <label for="password">Password</label>
-                            @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        @if (session()->has('loginError'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('loginError') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
-                        <button class="mb-3 w-100 btn btn-lg btn-primary" type="submit">Login</button>
-                        <p class="fs-6">Belum punya akun ? daftar <a href="/register">disini</a></p>
-                    </form>
-                </main>
-            </div>
+<div class="hold-transition register-page">
+  <div class="register-box">
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <img class="my-2 mx-auto d-block" src={{ asset('images/logo.png') }} width="60">
+        <div class="h1"><b>E-DUPAK</b></div>
+      </div>
+      <div class="card-body">
+        @if (session()->has('loginError'))
+        <div class="alert alert-danger alert-dismissible fade show " role="alert">
+          {{ session('loginError') }}
+          <button type="button" class="btn-close m-n1" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        @endif
+        <form action="/login" method="POST">
+          @csrf
+          <div class="input-group mb-3">
+            <input type="text" class="form-control @error('nip')is-invalid @enderror" name="nip" value="{{old('nip')}}" placeholder="NIP">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-id-card" style="width: 14px;"></span>
+              </div>
+            </div>
+            @error('nip')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control @error('password')is-invalid @enderror" name="password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+            @error('password')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+          </div>
+          <div class="col-full mb-2">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </div>
+        </form>
+        <div class="mb-4">
+          Belum punya akun ?&nbsp;<a href="/register" class="text-center">daftar di sini.</a>
+        </div>
+      </div>
     </div>
-@endsection
+  </div>
+</div>
+@endsection()
+
+
+@section('js')
+
+<!-- jQuery -->
+<script src="{{asset('adminlte/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('adminlte/dist/js/adminlte.min.js')}}"></script>
+
+@endsection()
