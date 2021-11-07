@@ -7,6 +7,7 @@
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         <img class="my-2 mx-auto d-block" src={{ asset('images/logo.png') }} width="60">
+        <div class="font-weight-light fs-4">REGISTER</div>
         <div class="h1"><b>E-DUPAK</b></div>
       </div>
       <div class="card-body">

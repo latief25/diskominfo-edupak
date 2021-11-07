@@ -14,17 +14,23 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <form action="/logout" method="POST">
-            @csrf
-            <button type="submit" class="nav-link bg-white px-3 border-0 d-flex align-items-center">
-              Logout
-              <span data-feather="log-out" class="ms-2" style="width:18px"></span>
-            </button>
-          </form>
-        </li>
+        <div class="dropdown">
+          <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{$data->nama}}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="d-flex justify-content-center">
+              <form action="/logout" method="POST">
+                @csrf
+                <button type="submit" class="nav-link bg-white px-3 border-0 d-flex align-items-center">
+                  Logout
+                  <span data-feather="log-out" class="ms-2" style="width:18px"></span>
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
       </ul>
-
     </nav>
     <!-- /.navbar -->
 
@@ -38,22 +44,15 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="info">
-            <a href="#" class="d-block">{{$data->nama}}</a>
-          </div>
-        </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
+              <a href="/dashboard" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
                 <p>
-                  Simple Link
-                  <span class="right badge badge-danger">New</span>
+                  Profile
                 </p>
               </a>
             </li>
@@ -80,28 +79,55 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="nip">NIP</label>
-                    <input type="text" name="nama" class="form-control" id="nip">
+                    <input type="text" class="form-control @error('nip')is-invalid @enderror" name="nip" value="{{$data->nip }}">
+                    @error('nip')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
                   </div>
+
                   <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" class="form-control" id="nama">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                      </div>
+                    <input type="text" class="form-control @error('nama')is-invalid @enderror" name="nama" value="{{$data->nama}}">
+                    @error('nama')
+                    <div class="invalid-feedback">
+                      {{ $message }}
                     </div>
+                    @enderror
                   </div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+                  <div class="form-group">
+                    <label for="nomer_seri_karpeg">Nomer Seri KARPEG</label>
+                    <input type="text" class="form-control @error('nomer_seri_karpeg')is-invalid @enderror" name="nomer_seri_karpeg" value="{{$data->nomer_seri_karpeg}}">
+                    @error('nomer_seri_karpeg')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
                   </div>
+
+                  <div class="form-group">
+                    <label for="pangkat">Pangkat</label>
+                    <select class="form-control">
+                      <option selected value="{{$data->nama_pangkat}}">{{$data->nama_pangkat ?? 'Pilih pangkat'}}</option>
+                      @foreach ($pangkat as $p)
+                      <option value="{{ $p->kode_pangkat }}">{{ $p->nama_pangkat }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="tempat_lahir">Tempat Lahir</label>
+                    <input type="text" class="form-control @error('tempat_lahir')is-invalid @enderror" name="tempat_lahir" value="{{$data->tempat_lahir}}">
+                    @error('tempat_lahir')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+
+
                 </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>

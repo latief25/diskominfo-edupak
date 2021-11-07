@@ -7,6 +7,7 @@
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         <img class="my-2 mx-auto d-block" src={{ asset('images/logo.png') }} width="60">
+        <div class="font-weight-light fs-4">LOGIN</div>
         <div class="h1"><b>E-DUPAK</b></div>
       </div>
       <div class="card-body">
@@ -48,7 +49,7 @@
             <button type="submit" class="btn btn-primary btn-block">Login</button>
           </div>
         </form>
-        <div class="mb-4">
+        <div class="mt-4 mb-2">
           Belum punya akun ?&nbsp;<a href="/register" class="text-center">daftar di sini.</a>
         </div>
       </div>
