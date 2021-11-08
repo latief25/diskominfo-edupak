@@ -18,6 +18,8 @@ class ProfileController extends Controller
       "tanggal_lahir" => "required|date|before:today",
       "jenis_kelamin" => "required|in:L,P",
       "pendidikan_tertinggi" => "required",
+      "pangkat" => "required",
+      "tmt_golongan_ruang" => "required",
     ]);
     $user = User::where('nip', $validateData['nip'])->first();
     $user->nama = $validateData['nama'];
@@ -27,6 +29,8 @@ class ProfileController extends Controller
     $user->jenis_kelamin = $validateData['jenis_kelamin'];
     $user->pendidikan_tertinggi = $validateData['pendidikan_tertinggi'];
     $user->nkarpeg = $validateData['nomor_seri_karpeg'];
+    $user->pangkat_id = $validateData['pangkat'];
+    $user->tmt_golongan_ruang = $validateData['tmt_golongan_ruang'];
     $user->save();
     return redirect('/dashboard');
   }

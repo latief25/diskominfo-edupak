@@ -28,11 +28,8 @@ class CreateUsersTable extends Migration
       $table->string('password')->nullable();
       $table->string("nkarpeg")->unique()->nullable();
       $table->date("tmt_golongan_ruang")->nullable();
-      $table->unsignedTinyInteger("id_pangkat")->nullable();
-
-
-
-
+      $table->unsignedTinyInteger("pangkat_id")->nullable();
+      $table->foreign('pangkat_id')->references('id')->on('pangkat')->nullOnDelete();
       $table->rememberToken();
       $table->timestamps();
     });

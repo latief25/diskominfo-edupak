@@ -111,9 +111,11 @@
                       <div class="form-group">
                         <label for="pangkat">Pangkat</label>
                         <select class="form-control" name="pangkat">
-                          <option selected value="{{$data->nama_pangkat}}">{{$data->nama_pangkat ?? 'Pilih pangkat'}}</option>
+                          @if($data->pangkat_id == null)
+                          <option selected>Pilih Pangakat</option>
+                          @endif
                           @foreach ($pangkat as $p)
-                          <option value="{{ $p->kode_pangkat }}">{{ $p->nama_pangkat }}</option>
+                          <option @if($data->pangkat_id === $p->id) selected @endif value="{{$p->id}}">{{ $p->nama_pangkat }}</option>
                           @endforeach
                         </select>
                       </div>
