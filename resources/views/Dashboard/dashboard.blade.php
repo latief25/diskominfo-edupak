@@ -74,7 +74,7 @@
                 <h3 class="card-title">Data Profile</h3>
               </div>
               <!-- form start -->
-              <form>
+              <form method="POST" action="/profile">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -98,9 +98,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="nomer_seri_karpeg">Nomer Seri KARPEG</label>
-                    <input type="text" class="form-control @error('nomer_seri_karpeg')is-invalid @enderror" name="nomer_seri_karpeg" value="{{$data->nomer_seri_karpeg}}">
-                    @error('nomer_seri_karpeg')
+                    <label for="nomor_seri_karpeg">Nomor Seri KARPEG</label>
+                    <input type="text" class="form-control @error('nomor_seri_karpeg')is-invalid @enderror" name="nomor_seri_karpeg" value="{{$data->nkarpeg}}">
+                    @error('nomor_seri_karpeg')
                     <div class="invalid-feedback">
                       {{ $message }}
                     </div>
@@ -110,7 +110,7 @@
                     <div class="col-md">
                       <div class="form-group">
                         <label for="pangkat">Pangkat</label>
-                        <select class="form-control">
+                        <select class="form-control" name="pangkat">
                           <option selected value="{{$data->nama_pangkat}}">{{$data->nama_pangkat ?? 'Pilih pangkat'}}</option>
                           @foreach ($pangkat as $p)
                           <option value="{{ $p->kode_pangkat }}">{{ $p->nama_pangkat }}</option>
@@ -119,7 +119,7 @@
                       </div>
                     </div>
                     <div class="col-md">
-                      <div class="form-group">
+                      <div class="form-group" name="tmt_golongan_ruang">
                         <label for="tmt_golongan_ruang">TMT Golongan Ruang</label>
                         <input type="date" class="form-control @error('tmt_golongan_ruang')is-invalid @enderror" name="tmt_golongan_ruang" value="{{$data->tmt_golongan_ruang}}">
                       </div>
@@ -143,20 +143,24 @@
 
                   <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
-                    <select class="form-control">
-                      <option selected value="{{$data->jenis_kelamin}}">{{$data->jenis_kelamin?? 'Pilih Jenis Kelamin'}}</option>
-                      <option value="L">Laki-Laki</option>
-                      <option value="P">Perempuan</option>
+                    <select class="form-control" name="jenis_kelamin">
+                      @if($data->jenis_kelamin == null)
+                      <option selected>Pilih Jenis Kelamin</option>
+                      @endif
+                      <option value="L" @if($data->jenis_kelamin === "L") selected @endif>Laki-Laki</option>
+                      <option value="P" @if($data->jenis_kelamin === "P") selected @endif>Perempuan</option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="pendidikan_tertinggi">Pendidikan Tertinggi</label>
-                    <select class="form-control">
-                      <option selected value="{{$data->pendidikan_tertinggi}}">{{$data->pendidikan_tertinggi?? 'Pilih Pendidikan Terakhir'}}</option>
-                      <option value="sma">SMA</option>
-                      <option value="s1">S1</option>
-                      <option value="s2">S2</option>
-                      <option value="s3">S3</option>
+                    <select class="form-control" name="pendidikan_tertinggi">
+                      @if($data->pendidikan_tertinggi == null)
+                      <option selected>Pilih Pendidikan Tertinggi</option>
+                      @endif
+                      <option value="sma" @if($data->pendidikan_tertinggi === "sma") selected @endif>SMA</option>
+                      <option value="s1" @if($data->pendidikan_tertinggi === "s1") selected @endif>S1</option>
+                      <option value="s2" @if($data->pendidikan_tertinggi === "s2") selected @endif>S2</option>
+                      <option value="s3" @if($data->pendidikan_tertinggi === "s3") selected @endif>S3</option>
                     </select>
                   </div>
                   <div class="row">
