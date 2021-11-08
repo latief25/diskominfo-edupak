@@ -9,7 +9,7 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="/dashboard" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
 
@@ -106,15 +106,24 @@
                     </div>
                     @enderror
                   </div>
-
-                  <div class="form-group">
-                    <label for="pangkat">Pangkat</label>
-                    <select class="form-control">
-                      <option selected value="{{$data->nama_pangkat}}">{{$data->nama_pangkat ?? 'Pilih pangkat'}}</option>
-                      @foreach ($pangkat as $p)
-                      <option value="{{ $p->kode_pangkat }}">{{ $p->nama_pangkat }}</option>
-                      @endforeach
-                    </select>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="pangkat">Pangkat</label>
+                        <select class="form-control">
+                          <option selected value="{{$data->nama_pangkat}}">{{$data->nama_pangkat ?? 'Pilih pangkat'}}</option>
+                          @foreach ($pangkat as $p)
+                          <option value="{{ $p->kode_pangkat }}">{{ $p->nama_pangkat }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="tmt_golongan_ruang">TMT Golongan Ruang</label>
+                        <input type="date" class="form-control @error('tmt_golongan_ruang')is-invalid @enderror" name="tmt_golongan_ruang" value="{{$data->tmt_golongan_ruang}}">
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -127,10 +136,84 @@
                     @enderror
                   </div>
 
+                  <div class="form-group">
+                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                    <input type="date" class="form-control @error('tanggal_lahir')is-invalid @enderror" name="tanggal_lahir" value="{{$data->tanggal_lahir}}">
+                  </div>
 
+                  <div class="form-group">
+                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                    <select class="form-control">
+                      <option selected value="{{$data->jenis_kelamin}}">{{$data->jenis_kelamin?? 'Pilih Jenis Kelamin'}}</option>
+                      <option value="L">Laki-Laki</option>
+                      <option value="P">Perempuan</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="pendidikan_tertinggi">Pendidikan Tertinggi</label>
+                    <select class="form-control">
+                      <option selected value="{{$data->pendidikan_tertinggi}}">{{$data->pendidikan_tertinggi?? 'Pilih Pendidikan Terakhir'}}</option>
+                      <option value="sma">SMA</option>
+                      <option value="s1">S1</option>
+                      <option value="s2">S2</option>
+                      <option value="s3">S3</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="jabatan_fungsional">Jabatan Fungsional</label>
+                        <select class="form-control">
+                          <option selected value="{{$data->nama_jabatan_fungsional}}">{{$data->jabatan_fungsional ?? 'Pilih Jabatan Fungsional'}}</option>
+                          <option value="#">Data 1</option>
+                          <option value="#">Data 2</option>
+                          <option value="#">Data 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="tmt_fungsional">TMT Jabatan Fungsional</label>
+                        <input type="date" class="form-control @error('tmt_fungsional')is-invalid @enderror" name="tmt_fungsional" value="{{$data->tmt_fungsional}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="masa_kerja_golongan_lama">Masa Kerja Golongan Lama</label>
+                        <input type="month" class="form-control @error('masa_kerja_golongan_lama')is-invalid @enderror" name="masa_kerja_golongan_lama" value="{{$data->masa_kerja_golongan_lama}}">
+                        @error('masa_kerja_golongan_lama')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="masa_kerja_golongan_baru">Masa Kerja Golongan Baru</label>
+                        <input type="month" class="form-control @error('masa_kerja_golongan_baru')is-invalid @enderror" name="masa_kerja_golongan_baru" value="{{$data->masa_kerja_golongan_baru}}">
+                        @error('masa_kerja_golongan_lama')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="unit_kerja">Unit Kerja</label>
+                      <select class="form-control">
+                        <option selected value="{{$data->unit_kerja}}">{{$data->unit_kerja ?? 'Pilih Unit Kerja'}}</option>
+                        <option value="#">Data 1</option>
+                        <option value="#">Data 2</option>
+                        <option value="#">Data 3</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="card-footer mt-n2 mb-3">
+                  <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
               </form>
             </div>
