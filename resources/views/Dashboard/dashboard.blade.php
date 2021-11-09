@@ -69,6 +69,12 @@
       <div class="content mt-4">
         <div class="container-fluid">
           <div class="row mx-1">
+            @if (session()->has('berhasil'))
+            <div class="alert alert-success alert-dismissible fade show " role="alert">
+              {{ session('berhasil') }}
+              <button type="button" class="btn-close m-n1" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             <div class="card card-primary px-0 mx-auto">
               <div class="card-header">
                 <h3 class="card-title">Data Profile</h3>
@@ -169,12 +175,19 @@
                     <div class="col-md">
                       <div class="form-group">
                         <label for="jabatan_fungsional">Jabatan Fungsional</label>
+                        <input type="text" class="form-control @error('jabatan_fungsional')is-invalid @enderror" name="jabatan_fungsional" value="{{$data->jabatan_fungsional}}">
+                        @error('jabatan_fungsional')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <!--      <label for="jabatan_fungsional">Jabatan Fungsional</label>
                         <select class="form-control">
                           <option selected value="{{$data->nama_jabatan_fungsional}}">{{$data->jabatan_fungsional ?? 'Pilih Jabatan Fungsional'}}</option>
                           <option value="#">Data 1</option>
                           <option value="#">Data 2</option>
                           <option value="#">Data 3</option>
-                        </select>
+                        </select> -->
                       </div>
                     </div>
                     <div class="col-md">

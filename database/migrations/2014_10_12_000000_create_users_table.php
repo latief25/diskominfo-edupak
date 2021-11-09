@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateUsersTable extends Migration
 {
@@ -15,8 +16,8 @@ class CreateUsersTable extends Migration
   {
     Schema::create('users', function (Blueprint $table) {
       $table->unsignedInteger('id', true);
-      $table->string('nama');
-      $table->string('nip')->unique();
+      $table->string('nama', 50);
+      $table->char('nip', 18)->unique();
       $table->enum("role", [
         "pegawai",
         "admin"
@@ -30,6 +31,11 @@ class CreateUsersTable extends Migration
       $table->date("tmt_golongan_ruang")->nullable();
       $table->unsignedTinyInteger("pangkat_id")->nullable();
       $table->foreign('pangkat_id')->references('id')->on('pangkat')->nullOnDelete();
+      $table->string('jabatan_fungsional')->nullable();
+      $table->date('tmt_jabatan_fungsional')->nullable();
+      $table->date('masa_kerja_golongan_lama')->nullable();
+      $table->date('masa_kerja_golongan_baru')->nullable();
+      $table->string('unit_kerja')->nullable();
       $table->rememberToken();
       $table->timestamps();
     });
