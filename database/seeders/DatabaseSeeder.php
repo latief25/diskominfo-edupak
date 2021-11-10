@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\JabatanFungsional;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call(InstansiSeeder::class);
         $this->call(PangkatSeeder::class);
+        $this->call(UnitKerjaSeeder::class);
+        $this->call(JabatanFungsionalSeeder::class);
     }
 }
