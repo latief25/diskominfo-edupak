@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\PrintPakController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -22,28 +23,31 @@ use App\Http\Controllers\ProfileController;
 // Route ini hanya dapat di akses ketia user belum melakukan login
 Route::middleware(['guest'])->group(function () {
 
-    Route::get('/', function () {
-        return redirect('/login');
-    });
+  Route::get('/', function () {
+    return redirect('/login');
+  });
 
-    // Login
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'authenticate']);
+  // Login
+  Route::get('/login', [LoginController::class, 'index'])->name('login');
+  Route::post('/login', [LoginController::class, 'authenticate']);
 
-    // Register
-    Route::get('/register', [RegisterController::class, 'index']);
-    Route::post('/register', [RegisterController::class, 'store']);
+  // Register
+  Route::get('/register', [RegisterController::class, 'index']);
+  Route::post('/register', [RegisterController::class, 'store']);
 });
 
 // Route ini hanya dapat diakses ketika user telah melakukan login
 Route::middleware(['auth'])->group(function () {
 
-    // Logout
-    Route::post('/logout', [LogOutController::class, 'logout']);
+  // Logout
+  Route::post('/logout', [LogOutController::class, 'logout']);
 
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+  // Dashboard
+  Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    // Profile
-    Route::post('/profile', [ProfileController::class, 'store']);
+  // Profile
+  Route::post('/profile', [ProfileController::class, 'store']);
+
+  // Print PAK
+  Route::get('/print-pak', [PrintPakController::class, 'index']);
 });
