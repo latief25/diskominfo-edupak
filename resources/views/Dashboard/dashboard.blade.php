@@ -184,16 +184,6 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-group">
-                        {{-- <label for="jabatan_fungsional">Jabatan Fungsional</label>
-                                                    <input type="text"
-                                                        class="form-control @error('jabatan_fungsional')is-invalid @enderror"
-                                                        name="jabatan_fungsional" value="{{ $data->jabatan_fungsional }}"
-                        required>
-                        @error('jabatan_fungsional')
-                        <div class="invalid-feedback">
-                          {{ $message }}
-                        </div>
-                        @enderror --}}
                         <label for="jabatan_fungsional">Jabatan Fungsional</label>
                         <select class="form-control" name="jabatan_fungsional">
                           @if ($data->jabatan_fungsional_id == null)
@@ -369,22 +359,37 @@
       <tr>
         <td class="ps-1 text-center fw-bold">8.</td>
         <td class="ps-1" colspan="4">Jabatan Fungsional / TMT</td>
-        <td class="ps-1" colspan="6">Jabatan Fungsional / TMT orangnya</td>
+        <td class="ps-1" colspan="6">
+          @if(isset($data->jabatan_fungsional_id) && isset($data->tmt_jabatan_fungsional))
+          {{$jabatan_fungsional[$data->jabatan_fungsional_id]->nama_jabatan_fungsional}}, {{ date('d F Y', strtotime($data->tmt_jabatan_fungsional)); }}
+          @endif
       </tr>
       <tr>
         <td class="ps-1 text-center fw-bold" rowspan="2">9.</td>
         <td class="ps-1" rowspan="2" colspan="3">Masa Keja Golongan</td>
         <td class="ps-1">Lama</td>
-        <td class="ps-1">masa kerja golongan lama</td>
+        <td class="ps-1">
+          @isset($data->masa_kerja_golongan_lama)
+          {{ date('F Y', strtotime($data->masa_kerja_golongan_lama)); }}
+          @endisset
+        </td>
       </tr>
       <tr>
         <td class="ps-1">Baru</td>
-        <td class="ps-1">Masa kerja golongan baru</td>
+        <td class="ps-1">
+          @isset($data->masa_kerja_golongan_baru)
+          {{ date('F Y', strtotime($data->masa_kerja_golongan_baru)); }}
+          @endisset
+        </td>
       </tr>
       <tr>
         <td class="ps-1 text-center fw-bold">10.</td>
         <td class="ps-1" colspan="4">Unit Kerja</td>
-        <td class="ps-1" colspan="6">Nama orangnya</td>
+        <td class="ps-1" colspan="6">
+          @isset($data->unit_kerja_id)
+          {{$unit_kerja[$data->unit_kerja_id]->nama_unit_kerja}}
+          @endisset
+        </td>
       </tr>
     </table>
 
