@@ -51,3 +51,10 @@ Route::middleware(['auth'])->group(function () {
   // Print PAK
   Route::get('/print-pak', [PrintPakController::class, 'index']);
 });
+
+
+// Admin
+Route::get('/daftar-pegawai', function () {
+  $data['nama'] = "muhammad sayuti";
+  return view('Dashboard.Admin.list_user', ['data' => $data]);
+});
