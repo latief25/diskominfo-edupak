@@ -48,7 +48,7 @@
         <!-- TODO : TAMBAHKAN GOLONGAN RUANG DAN TMT -->
         <td class="ps-1" colspan="6">
           @isset($data->pangkat_id)
-          {{$pangkat[$data->pangkat_id]->nama_pangkat}}
+          {{$pangkat[$data->pangkat_id]->nama_pangkat}} {{$pangkat[$data->pangkat_id]->kode_pangkat}}
           @endisset
         </td>
       </tr>
