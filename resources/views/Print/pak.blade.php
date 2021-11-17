@@ -19,7 +19,7 @@
       <p class="mt-n3">Nomor : 831/XXXX XXXX - SETKOM/DISKOMINFO/2021</p>
       <p class="mt-n3">Masa Penilaian : XXXX s/d XXXX</p>
     </div>
-    <p class="ms-4 mb-n1">Instansi : xxxxxx</p>
+    <p class="ms-4 mb-n1">Instansi : Instansi ini</p>
 
     <!--  TABEL KETERANGAN PERORANGAN -->
     <table class="w-100">
