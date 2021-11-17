@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DaftarPegawai;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\PrintPakController;
 use App\Http\Controllers\ProfileController;
@@ -54,7 +55,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Admin
-Route::get('/daftar-pegawai', function () {
-  $data['nama'] = "muhammad sayuti";
-  return view('Dashboard.Admin.list_user', ['data' => $data]);
-});
+Route::get('/daftar-pegawai', [DaftarPegawai::class, 'index']);
