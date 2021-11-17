@@ -8,7 +8,7 @@ class DaftarPegawai extends Controller
 {
   public function index()
   {
-    $data = User::paginate(2);
+    $data = User::paginate(15);
     return view('Dashboard.Admin.list_user', ['data' => $data, 'title' => 'Daftar Pegawai']);
   }
 }
