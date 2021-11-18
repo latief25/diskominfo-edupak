@@ -57,4 +57,5 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'ceklevel:admin'])->group(function () {
   // Admin
   Route::get('/daftar-pegawai', [DaftarPegawai::class, 'index']);
+  Route::post('/daftar-pegawai', [DaftarPegawai::class, 'search'])->name('daftar.pegawai');
 });
