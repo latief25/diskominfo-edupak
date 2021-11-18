@@ -1,5 +1,6 @@
 @extends('Dashboard.layouts.main')
 
+<!-- content dari dashboard -->
 @section('dashboard-content')
 <div class="mb-3 px-0">
   <button class="btn btn-primary me-2" onclick="edit()">Edit
@@ -18,32 +19,3 @@
 <!-- Ini bagian yang akan diprint -->
 @include('Print.pak')
 @endsection
-
-@section('head')
-<style>
-  .letter-spacing {
-    letter-spacing: 4px;
-  }
-
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-
-  td[rowspan] {
-    vertical-align: top;
-    text-align: left;
-  }
-
-  .col-width {
-    width: 4%;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
-  }
-</style>
-@endsection()

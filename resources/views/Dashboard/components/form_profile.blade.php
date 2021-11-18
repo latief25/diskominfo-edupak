@@ -131,7 +131,7 @@
           <div class="form-group">
             <label for="masa_kerja_golongan_baru">Masa Kerja Golongan Baru</label>
             <input type="month" class="form-control @error('masa_kerja_golongan_baru')is-invalid @enderror" name="masa_kerja_golongan_baru" value="{{ $data->masa_kerja_golongan_baru }}" required>
-            @error('masa_kerja_golongan_lama')
+            @error('masa_kerja_golongan_baru')
             <div class="invalid-feedback">
               {{ $message }}
             </div>

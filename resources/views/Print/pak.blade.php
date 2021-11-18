@@ -250,3 +250,33 @@
     </div>
   </div>
 </div>
+
+
+@section('head')
+<style>
+  .letter-spacing {
+    letter-spacing: 4px;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  td[rowspan] {
+    vertical-align: top;
+    text-align: left;
+  }
+
+  .col-width {
+    width: 4%;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+</style>
+@endsection()

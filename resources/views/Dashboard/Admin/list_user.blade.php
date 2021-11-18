@@ -19,7 +19,7 @@
         <td>{{$row->nip}}</td>
         <td>{{$row->nama}}</td>
         <td>
-          ---,---,---
+          ------,------,------
         </td>
       </tr>
       @endforeach

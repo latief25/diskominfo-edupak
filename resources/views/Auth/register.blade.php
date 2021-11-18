@@ -20,7 +20,7 @@
         <form action="/register" method="POST">
           @csrf
           <div class="input-group mb-3">
-            <input type="text" class="form-control @error('nama')is-invalid @enderror" name="nama" value="{{old('nama')}}" placeholder="Full name">
+            <input type="text" class="form-control @error('nama')is-invalid @enderror" name="nama" value="{{old('nama')}}" placeholder="Full name" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -33,7 +33,7 @@
             @enderror
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control @error('nip')is-invalid @enderror" name="nip" value="{{old('nip')}}" placeholder="NIP">
+            <input type="text" class="form-control @error('nip')is-invalid @enderror" name="nip" value="{{old('nip')}}" placeholder="NIP" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-id-card" style="width: 14px;"></span>
@@ -46,7 +46,7 @@
             @enderror
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control @error('password')is-invalid @enderror" name="password" placeholder="Password">
+            <input type="password" class="form-control @error('password')is-invalid @enderror" name="password" placeholder="Password" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -59,7 +59,7 @@
             @enderror
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control @error('password_confirmation')is-invalid @enderror" name="password_confirmation" placeholder="Retype password">
+            <input type="password" class="form-control @error('password_confirmation')is-invalid @enderror" name="password_confirmation" placeholder="Retype password" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
