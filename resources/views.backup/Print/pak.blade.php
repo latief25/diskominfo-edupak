@@ -13,23 +13,13 @@
     </div>
     <div class="w-full bg-black mt-1" style="height: 4px;"></div>
     <div class="w-full bg-black mt-1" style="height: 8px;"></div>
-    <div class="col-12">
-      <div class="offset-7">
-        <p class="mt-3 mb-n1">KEPUTUSAN BERSAMA</p>
-        <p class="mt-n1 mb-n1">KEPALA BADAN PUSAT STATISKTIK DAN</p>
-        <p class="mt-n1 mb-n1">KEPALA BADAN PENGAWASAN NEGARA</p>
-        <p class="mt-n1 mb-n1">NOMOR : WD002/BPS-SKB/II/2004</p>
-        <p class="mt-n1 mb-n1">NOMOR : 04 TAHUN 2004</p>
-        <p class="mt-n1 mb-n1">TANGGAL : 17 Februari 2004</p>
-      </div>
-    </div>
     <div class="text-center mt-5">
       <p class="fw-bold fs-4">PENETAPAN ANGKA KREDIT</p>
       <p class="mt-n4">-------------------------------------------------------------------------------------------</p>
-      <p class="mt-n3">Nomor : 831/XXXX XXXX - SETKOM/DINFOMINFO/2021</p>
+      <p class="mt-n3">Nomor : 831/XXXX XXXX - SETKOM/DISKOMINFO/2021</p>
       <p class="mt-n3">Masa Penilaian : XXXX s/d XXXX</p>
     </div>
-    <p class="ms-4 mb-n1">Instansi : xxxxxx</p>
+    <p class="ms-4 mb-n1">Instansi : Instansi ini</p>
 
     <!--  TABEL KETERANGAN PERORANGAN -->
     <table class="w-100">
@@ -58,7 +48,7 @@
         <!-- TODO : TAMBAHKAN GOLONGAN RUANG DAN TMT -->
         <td class="ps-1" colspan="6">
           @isset($data->pangkat_id)
-          {{$pangkat[$data->pangkat_id]->nama_pangkat}}
+          {{$pangkat[$data->pangkat_id]->nama_pangkat}} {{$pangkat[$data->pangkat_id]->kode_pangkat}}
           @endisset
         </td>
       </tr>
@@ -119,6 +109,7 @@
         <td class="ps-1 text-center fw-bold">10.</td>
         <td class="ps-1" colspan="4">Unit Kerja</td>
         <td class="ps-1" colspan="6">
+          Ini contoh data yang panjang sekali Ini contoh data yang panjang sekali Ini contoh data yang panjang sekali Ini contoh data yang panjang sekali
           @isset($data->unit_kerja_id)
           {{$unit_kerja[$data->unit_kerja_id]->nama_unit_kerja}}
           @endisset
@@ -242,7 +233,7 @@
           <p class="mb-n1">5. Pimpinan unit kerja Prenata Komputer yang bersangkutan;</p>
           <p class="mb-n1">6. Arsip</p>
         </div>
-        <div class="col-3 offset-3">
+        <div class="col-4 offset-2">
           <p class="mb-n1">Ditetapkan di : Banjarbaru</p>
           <p class="mb-n1">Pada tanggal : {{ date('d F Y'); }}
           </p>
@@ -259,3 +250,33 @@
     </div>
   </div>
 </div>
+
+
+@section('head')
+<style>
+  .letter-spacing {
+    letter-spacing: 4px;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  td[rowspan] {
+    vertical-align: top;
+    text-align: left;
+  }
+
+  .col-width {
+    width: 4%;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+</style>
+@endsection()

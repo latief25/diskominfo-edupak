@@ -10,7 +10,7 @@
       <ul class="navbar-nav ml-auto">
         <div class="dropdown">
           <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ $data->nama }}
+            {{ auth()->user()->nama }}
           </button>
           <ul class="dropdown-menu">
             <li class="d-flex justify-content-center">

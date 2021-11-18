@@ -2,6 +2,21 @@
   @csrf
   <fieldset id="edit" disabled>
     <div class="card-body">
+
+      <div class="form-group">
+        <label for="pangkat">Instansi</label>
+        <select class="form-control" name="pangkat">
+          @if (1)
+          <option selected>Pilih Instansi</option>
+          @endif
+          @foreach ($instansi as $i)
+          <option @if ($data->pangkat_id === $i->id) selected @endif value="{{ $i->id }}">
+            {{ $i->kinsduk }} {{ $i->nwil }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="nip">NIP</label>
         <input type="text" class="form-control @error('nip')is-invalid @enderror" name="nip" value="{{ $data->nip }}" required>

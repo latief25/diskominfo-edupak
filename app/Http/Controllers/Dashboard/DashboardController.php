@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Models\Pangkat;
 use App\Models\UnitKerja;
 use App\Http\Controllers\Controller;
+use App\Models\Instansi;
 use App\Models\JabatanFungsional;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -20,12 +20,15 @@ class DashboardController extends Controller
     $pangkat = Pangkat::all();
     $unit_kerja = UnitKerja::all();
     $jabatan_fungsional = JabatanFungsional::all();
+    $instansi = Instansi::all();
+
     return view("Dashboard.dashboard", [
       "title" => "Dashboard",
       "data" => $data,
       "pangkat" => $pangkat,
       "unit_kerja" => $unit_kerja,
-      "jabatan_fungsional" => $jabatan_fungsional
+      "jabatan_fungsional" => $jabatan_fungsional,
+      "instansi" => $instansi,
     ]);
   }
 }
