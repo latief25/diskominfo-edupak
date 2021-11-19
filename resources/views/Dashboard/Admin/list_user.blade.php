@@ -60,20 +60,20 @@
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
 <script>
   $(document).ready(function() {
     $('#tabel-pegawai tfoot th.search').each(function() {
       var title = $(this).text();
       $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
-
     $('#tabel-pegawai').DataTable({
       initComplete: function() {
         // Apply the search
         this.api().columns().every(function() {
           var that = this;
 
-          $('input', this.footer()).on('keyup change clear', function() {
+          $('input', this.footer()).on('change clear', function() {
             if (that.search() !== this.value) {
               that
                 .search(this.value)
@@ -82,12 +82,26 @@
           });
         });
       },
-
-      "processing": true,
-      "serverSide": true,
+      dom: 'lrtip',
+      "bPaginate": true,
+      "bLengthChange": true,
+      "bFilter": true,
+      "bSort": true,
+      "bAutoWidth": true,
+      "lengthMenu": [
+        [10, 25, 50],
+        [10, 25, 50]
+      ],
+      "columnDefs": [{
+        "orderable": false,
+        "targets": [0, 3]
+      }, ],
+      processing: true,
       search: {
-        return: true
+        return: false
       },
+      serverSide: true,
+
       "ajax": "{{route('daftar.pegawai')}}",
       "columns": [{
           "data": null,
@@ -104,8 +118,9 @@
         },
         {
           "data": null,
+          "sortable": false,
           render: function() {
-            return "";
+            return '<div class="d-flex justify-content-evenly"><i class="btn btn-primary fas fa-eye"></i><i class="btn btn-warning fas fa-edit"></i></div>';
           }
         },
       ]

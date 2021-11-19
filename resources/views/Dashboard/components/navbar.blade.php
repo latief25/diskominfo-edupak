@@ -3,7 +3,7 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="/dashboard" role="button"><i class="fas fa-bars"></i></a>
+          <div class="nav-link" data-widget="pushmenu" role="button"><i class="fas fa-bars"></i></div>
         </li>
       </ul>
 

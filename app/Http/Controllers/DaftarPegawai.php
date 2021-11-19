@@ -13,6 +13,6 @@ class DaftarPegawai extends Controller
     if ($request->ajax()) {
       return datatables($data)->toJson();
     }
-    return view('Dashboard.Admin.list_user');
+    return view('Dashboard.Admin.list_user', ["title" => "Daftar Pegawai"]);
   }
 }
