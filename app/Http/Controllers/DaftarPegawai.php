@@ -7,14 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class DaftarPegawai extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    $data = DB::table('users')->orderBy('updated_at', 'desc')->paginate(15);
-    return view('Dashboard.Admin.list_user', ['data' => $data, 'title' => 'Daftar Pegawai']);
-  }
-
-  public function search(Request $request)
-  {
-    dd($request);
+    $data = DB::table('users')->select('nip', 'nama')->orderBy('updated_at', 'desc')->get();
+    if ($request->ajax()) {
+      return datatables($data)->toJson();
+    }
+    return view('Dashboard.Admin.list_user');
   }
 }

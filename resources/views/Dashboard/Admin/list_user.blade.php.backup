@@ -1,7 +1,7 @@
 @extends('Dashboard.layouts.main')
 
 @section('dashboard-content')
-<div class="px-0" style="min-height: 100vh;">
+<div class="px-0" style="height: 100vh;">
   <h4>Daftar Pegawai</h4>
   <table id="tabel-pegawai" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="tabel-pegawai">
     <thead>
@@ -12,6 +12,18 @@
         <th>Aksi</th>
       </tr>
     </thead>
+    <tbody>
+      @foreach ($data as $index => $row)
+      <tr class="odd">
+        <td>{{$index+1}}</td>
+        <td>{{$row->nip}}</td>
+        <td>{{$row->nama}}</td>
+        <td>
+          ------,------,------
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
     <tfoot>
       <tr>
         <th></th>
@@ -21,6 +33,7 @@
       </tr>
     </tfoot>
   </table>
+  {{$data->links("pagination::bootstrap-4")}}
 </div>
 @endsection
 
@@ -30,17 +43,6 @@
 <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-<style>
-  tfoot {
-    display: table-header-group;
-  }
-
-  tfoot input {
-    width: 100%;
-    padding: 3px;
-    box-sizing: border-box;
-  }
-</style>
 @endsection
 
 
@@ -62,14 +64,14 @@
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script>
   $(document).ready(function() {
+    // Setup - add a text input to each footer cell
     $('#tabel-pegawai tfoot th.search').each(function() {
       var title = $(this).text();
       $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
-
-    $('#tabel-pegawai').DataTable({
+    // DataTable
+    var table = $('#tabel-pegawai').DataTable({
       initComplete: function() {
-        // Apply the search
         this.api().columns().every(function() {
           var that = this;
 
@@ -81,32 +83,33 @@
             }
           });
         });
+        var r = $('#tabel-pegawai tfoot tr');
+        r.find('th').each(function() {
+          $(this).css('padding', 8);
+        });
+        $('#tabel-pegawai thead').append(r);
+        $('#search_0').css('text-align', 'center');
       },
-
-      "processing": true,
-      "serverSide": true,
+      "lengthMenu": [
+        [5, 10, 15],
+        [5, 10, 15]
+      ],
+    });
+    $('#daftar-pegawai').DataTable({
+      "ajax": {
+        "url": "{{route('daftar.pegawai')}}",
+        "type": "POST"
+      },
+      processing: true,
       search: {
         return: true
       },
-      "ajax": "{{route('daftar.pegawai')}}",
+      serverSide: true,
       "columns": [{
-          "data": null,
-          "sortable": false,
-          render: function(data, type, row, meta) {
-            return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        },
-        {
           "data": "nip"
         },
         {
           "data": "nama"
-        },
-        {
-          "data": null,
-          render: function() {
-            return "";
-          }
         },
       ]
     });
