@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DaftarPegawai;
+use App\Http\Controllers\DaftarPegawaiController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\PrintPakController;
 use App\Http\Controllers\ProfileController;
@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'ceklevel:admin'])->group(function () {
   // Admin
-  Route::get('/daftar-pegawai', [DaftarPegawai::class, 'index']);
-  Route::post('/daftar-pegawai', [DaftarPegawai::class, 'search'])->name('daftar.pegawai');
+  // Route::get('/daftar-pegawai', [DaftarPegawai::class, 'index']);
+  // Route::post('/daftar-pegawai', [DaftarPegawai::class, 'search'])->name('daftar.pegawai');
+  Route::resource('/daftar-pegawai', DaftarPegawaiController::class);
 });
