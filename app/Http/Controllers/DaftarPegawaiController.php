@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JabatanFungsional;
+use App\Models\Pangkat;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class DaftarPegawaiController extends Controller
 {
@@ -15,7 +19,10 @@ class DaftarPegawaiController extends Controller
    */
   public function index(Request $request)
   {
-    $data_pegawai = DB::table('users')->select('id', 'nip', 'nama')->orderBy('updated_at', 'desc')->get();
+    $data_pegawai = DB::table('users')->select('id', 'nip', 'nama', 'pangkat_id')->orderBy('updated_at', 'desc')->get();
+    $pangkat = Pangkat::all();
+    $unit_kerja = UnitKerja::all();
+    $jabatan_fungsional = JabatanFungsional::all();
     if ($request->ajax()) {
       return datatables()->of($data_pegawai)
         ->addColumn('action', function ($data) {
@@ -27,9 +34,13 @@ class DaftarPegawaiController extends Controller
         ->rawColumns(['action'])
         ->addIndexColumn()
         ->make(true);
-      // return datatables($data)->toJson();
     }
-    return view('Dashboard.Admin.list_user', ["title" => "Daftar Pegawai"]);
+    return view('Dashboard.Admin.list_user', [
+      "title" => "Daftar Pegawai",
+      "pangkat" => $pangkat,
+      "unit_kerja" => $unit_kerja,
+      "jabatan_fungsional" => $jabatan_fungsional,
+    ]);
   }
 
   /**
@@ -51,16 +62,19 @@ class DaftarPegawaiController extends Controller
   public function store(Request $request)
   {
     $id = $request->id;
+
     $post   =   User::updateOrCreate(
       ['id' => $id],
       [
         'nip' => $request->nip,
         'nama' => $request->nama,
+        'pangkat_id' => $request->pangkat,
       ]
     );
 
     return response()->json($post);
   }
+
 
   /**
    * Display the specified resource.

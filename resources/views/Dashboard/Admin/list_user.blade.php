@@ -23,8 +23,6 @@
   </table>
 </div>
 
-
-
 <!-- MULAI MODAL FORM TAMBAH/EDIT-->
 <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -41,18 +39,36 @@
               <input type="hidden" name="id" id="id">
 
               <div class="form-group">
-                <label for="nip" class="col-sm-12 control-label">NIP</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="nip" name="nip" value="" required>
+                <label for="nip">NIP</label>
+                <input type="text" id="nip" class="form-control @error('nip')is-invalid @enderror" name="nip" value="" required>
+                @error('nip')
+                <div class="invalid-feedback">
+                  {{ $message }}
                 </div>
+                @enderror
               </div>
 
               <div class="form-group">
-                <label for="nama" class="col-sm-12 control-label">Nama Pegawai</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="nama" name="nama" value="" required>
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" class="form-control @error('nama')is-invalid @enderror" name="nama" value="" required>
+                @error('nama')
+                <div class="invalid-feedback">
+                  {{ $message }}
                 </div>
+                @enderror
               </div>
+
+              <div class="form-group">
+                <label for="pangkat">Pangkat</label>
+                <select id="pangkat" class="form-control" name="pangkat">
+                  @foreach ($pangkat as $p)
+                  <option value="{{ $p->id }}">
+                    {{ $p->nama_pangkat }}
+                  </option>
+                  @endforeach
+                </select>
+              </div>
+
 
             </div>
 
@@ -84,7 +100,7 @@
         <p>Data pegawai yang telah dihapus akan hilang selamanya, apakah anda yakin ingin menghapusnya ?</p>
       </div>
       <div class="modal-footer bg-whitesmoke br">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Batal</button>
         <button type="button" class="btn btn-danger" name="tombol-hapus" id="tombol-hapus">Hapus
           Data</button>
       </div>
@@ -150,8 +166,6 @@
     });
   });
 
-
-
   //TOMBOL EDIT DATA PER PEGAWAI DAN TAMPIKAN DATA BERDASARKAN ID PEGAWAI KE MODAL
   $('body').on('click', '.edit-post', function() {
     var data_id = $(this).data('id');
@@ -162,6 +176,7 @@
       $('#id').val(data.id);
       $('#nip').val(data.nip);
       $('#nama').val(data.nama);
+      $('#pangkat').val(data.pangkat_id);
     })
   });
 
@@ -172,23 +187,23 @@
         $('#tombol-simpan').html('Sending..');
         $.ajax({
           data: $('#form-tambah-edit')
-            .serialize(), //function yang dipakai agar value pada form-control seperti input, textarea, select dll dapat digunakan pada URL query string ketika melakukan ajax request
-          url: "{{ route('daftar-pegawai.store') }}", //url simpan data
-          type: "POST", //karena simpan kita pakai method POST
-          dataType: 'json', //data tipe kita kirim berupa JSON
-          success: function(data) { //jika berhasil 
-            $('#form-tambah-edit').trigger("reset"); //form reset
-            $('#tambah-edit-modal').modal('hide'); //modal hide
-            $('#tombol-simpan').html('Simpan'); //tombol simpan
-            var oTable = $('#tabel-pegawai').dataTable(); //inialisasi datatable
-            oTable.fnDraw(false); //reset datatable
-            iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+            .serialize(),
+          url: "{{ route('daftar-pegawai.store') }}",
+          type: "POST",
+          dataType: 'json',
+          success: function(data) {
+            $('#form-tambah-edit').trigger("reset");
+            $('#tambah-edit-modal').modal('hide');
+            $('#tombol-simpan').html('Simpan');
+            var oTable = $('#tabel-pegawai').dataTable();
+            oTable.fnDraw(false);
+            iziToast.success({
               title: 'Data Berhasil Disimpan',
               message: "{{ Session('success')}}",
               position: 'bottomRight'
             });
           },
-          error: function(data) { //jika error tampilkan error pada console
+          error: function(data) {
             console.log('Error:', data);
             $('#tombol-simpan').html('Simpan');
           }
@@ -202,21 +217,20 @@
     $('#konfirmasi-modal').modal('show');
   });
 
-  //jika tombol hapus pada modal konfirmasi di klik maka
   $('#tombol-hapus').click(function() {
     $.ajax({
-      url: "daftar-pegawai/" + dataId, //eksekusi ajax ke url ini
+      url: "daftar-pegawai/" + dataId,
       type: 'delete',
       beforeSend: function() {
-        $('#tombol-hapus').text('Hapus Data'); //set text untuk tombol hapus
+        $('#tombol-hapus').text('Hapus Data');
       },
-      success: function(data) { //jika sukses
+      success: function(data) {
         setTimeout(function() {
-          $('#konfirmasi-modal').modal('hide'); //sembunyikan konfirmasi modal
+          $('#konfirmasi-modal').modal('hide');
           var oTable = $('#tabel-pegawai').dataTable();
-          oTable.fnDraw(false); //reset datatable
+          oTable.fnDraw(false);
         });
-        iziToast.success({ //tampilkan izitoast warning
+        iziToast.success({
           title: 'Data Berhasil Dihapus',
           message: '{{ Session("delete")}}',
           position: 'bottomRight'
@@ -257,17 +271,19 @@
       "bAutoWidth": true,
       "columnDefs": [{
         "orderable": false,
-        "targets": [0, 3]
+        "targets": [0, 3],
       }, ],
+      "order": [],
       processing: true,
       search: {
         return: false
       },
       serverSide: true,
+      "language": {
+        "processing": "Mohon tunggu"
+      },
       "ajax": "{{route('daftar-pegawai.index')}}",
       "columns": [{
-          "data": null,
-          "sortable": false,
           render: function(data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
@@ -279,15 +295,8 @@
           "data": "nama"
         },
         {
-          "data": "action"
+          "data": "action",
         },
-        // {
-        //   "data": null,
-        //   "sortable": false,
-        //   render: function(data, type, row, meta) {
-        //     return '<div class="d-flex justify-content-evenly"><i class="btn btn-primary fas fa-eye" data-bs-toggle="modal" data-bs-target="#editModal" data-id"' + $data.id + '"></i><i class="btn btn-warning fas fa-edit"></i></div>';
-        //   }
-        // },
       ]
     });
   });
