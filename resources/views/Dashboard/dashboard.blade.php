@@ -15,7 +15,7 @@
 </div>
 @endsection
 
-@section('print-profile')
 <!-- Ini bagian yang akan diprint -->
+@section('print-profile')
 @include('Print.pak')
 @endsection
