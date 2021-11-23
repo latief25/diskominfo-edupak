@@ -8,7 +8,6 @@ use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class DaftarPegawaiController extends Controller
 {
@@ -19,23 +18,28 @@ class DaftarPegawaiController extends Controller
    */
   public function index(Request $request)
   {
-    $data_pegawai = DB::table('users')->select('id', 'nip', 'nama', 'pangkat_id')->orderBy('updated_at', 'desc')->get();
+    $data_pegawai = DB::table('users')
+      ->leftJoin('pangkat', 'users.pangkat_id', '=', 'pangkat.id')
+      ->select('users.id', 'users.nip', 'users.nama', 'users.pangkat_id', 'pangkat.nama_pangkat')
+      ->orderBy('updated_at', 'desc')
+      ->get();
+
     $pangkat = Pangkat::all();
     $unit_kerja = UnitKerja::all();
     $jabatan_fungsional = JabatanFungsional::all();
     if ($request->ajax()) {
       return datatables()->of($data_pegawai)
         ->addColumn('action', function ($data) {
-          $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
+          $button = '<div class="d-flex justify-content-center"><a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit btn btn-warning btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
           $button .= '&nbsp;&nbsp;';
-          $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</button>';
+          $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</button></div>';
           return $button;
         })
         ->rawColumns(['action'])
         ->addIndexColumn()
         ->make(true);
     }
-    return view('Dashboard.Admin.list_user', [
+    return view('Dashboard.Admin.daftar-pegawai', [
       "title" => "Daftar Pegawai",
       "pangkat" => $pangkat,
       "unit_kerja" => $unit_kerja,
@@ -69,6 +73,7 @@ class DaftarPegawaiController extends Controller
         'nip' => $request->nip,
         'nama' => $request->nama,
         'pangkat_id' => $request->pangkat,
+        'jabatan_fungsional_id' => $request->jabatan_fungsional,
       ]
     );
 

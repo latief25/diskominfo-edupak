@@ -9,6 +9,7 @@
         <th style="width: 5%;">NO.</th>
         <th>NIP</th>
         <th>Nama</th>
+        <th>Pangkat</th>
         <th>Aksi</th>
       </tr>
     </thead>
@@ -17,6 +18,7 @@
         <th></th>
         <th class="search">NIP</th>
         <th class="search">Nama</th>
+        <th></th>
         <th></th>
       </tr>
     </tfoot>
@@ -69,6 +71,16 @@
                 </select>
               </div>
 
+              <div class="form-group">
+                <label for="jabatan_fungsional">Jabatan Fungsional</label>
+                <select id="jabatan_fungsional" class="form-control" name="jabatan_fungsional">
+                  @foreach ($jabatan_fungsional as $jf)
+                  <option value="{{ $jf->id }}">
+                    {{ $jf->nama_jabatan_fungsional }}
+                  </option>
+                  @endforeach
+                </select>
+              </div>
 
             </div>
 
@@ -129,6 +141,12 @@
     padding: 3px;
     box-sizing: border-box;
   }
+
+  tfoot select {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
 </style>
 @endsection
 
@@ -136,6 +154,11 @@
 @section('js')
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -175,6 +198,7 @@
       $('#nip').val(data.nip);
       $('#nama').val(data.nama);
       $('#pangkat').val(data.pangkat_id);
+      $('#jabatan_fungsional').val(data.jabatan_fungsional_id);
     })
   });
 
@@ -242,12 +266,14 @@
       var title = $(this).text();
       $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
-    $('#tabel-pegawai').DataTable({
+
+    var table = $('#tabel-pegawai').DataTable({
       initComplete: function() {
         // Apply the search
         this.api().columns().every(function() {
           var that = this;
 
+          // input search
           $('input', this.footer()).on('change clear', function() {
             if (that.search() !== this.value) {
               that
@@ -255,18 +281,39 @@
                 .draw();
             }
           });
+
         });
+
+
+        this.api().columns([3]).every(function() {
+          var column = this;
+          var select = $('<select><option value=""></option></select>')
+            .appendTo($(column.footer()).empty())
+            .on('change', function() {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
+
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+            });
+
+          column.data().unique().sort().each(function(d, j) {
+            if (d) {
+              select.append('<option value="' + d + '">' + d + '</option>')
+            }
+          });
+        });
+
+
       },
       dom: 'lrtip',
       "lengthMenu": [
         [10, 25, 50],
         [10, 25, 50]
       ],
-      "bPaginate": true,
-      "bLengthChange": true,
-      "bFilter": true,
-      "bSort": true,
-      "bAutoWidth": true,
+      "autoWidth": false,
       "columnDefs": [{
         "orderable": false,
         "targets": [0, 3],
@@ -293,10 +340,14 @@
           "data": "nama"
         },
         {
+          "data": "nama_pangkat"
+        },
+        {
           "data": "action",
         },
       ]
     });
+    table.columns.adjust().draw();
   });
 </script>
 @endsection
